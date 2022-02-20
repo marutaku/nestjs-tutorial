@@ -1,14 +1,15 @@
 import { CreateCatDto } from './dto/create-cat.dto';
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, UseFilters } from '@nestjs/common';
 import { CatsService } from './cats.service';
 import { Cat } from './interfaces/cat.interface';
+import { HttpExceptionFilter } from 'src/http-exception.filter';
 
 @Controller('cats')
 export class CatsController {
   constructor(private catsService: CatsService) {}
 
   @Get()
-  async findAll(): Promise<Cat[]> {
+  async findAll() {
     return this.catsService.findAll();
   }
 
@@ -19,6 +20,7 @@ export class CatsController {
   }
 
   @Post()
+  @UseFilters(HttpExceptionFilter)
   async create(@Body() createCatDto: CreateCatDto) {
     return this.catsService.create(createCatDto);
   }
