@@ -1,9 +1,4 @@
-import {
-  ForbiddenException,
-  HttpException,
-  HttpStatus,
-  Injectable,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Cat } from './interfaces/cat.interface';
 
 // @Injectable({ scope: Scope.REQUEST })
@@ -18,14 +13,6 @@ export class CatsService {
   }
 
   findAll() {
-    throw new ForbiddenException();
-    // throw new HttpException(
-    //   {
-    //     status: HttpStatus.FORBIDDEN,
-    //     error: 'This is a custom message',
-    //   },
-    //   HttpStatus.FORBIDDEN,
-    // );
-    // return this.cats;
+    return this.cats;
   }
 }

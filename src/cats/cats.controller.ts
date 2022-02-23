@@ -1,8 +1,16 @@
 import { CreateCatDto } from './dto/create-cat.dto';
-import { Body, Controller, Get, Param, Post, UseFilters } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  ParseIntPipe,
+  Post,
+  UseFilters,
+} from '@nestjs/common';
 import { CatsService } from './cats.service';
-import { Cat } from './interfaces/cat.interface';
 import { HttpExceptionFilter } from 'src/http-exception.filter';
+import { ValidationPipe } from 'src/validation.pipe';
 
 @Controller('cats')
 export class CatsController {
@@ -14,14 +22,18 @@ export class CatsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: number): string {
+  findOne(
+    @Param('id', new ParseIntPipe())
+    id: number,
+  ): string {
     console.log(id);
     return `This action returns a #${id} cat`;
   }
 
   @Post()
   @UseFilters(HttpExceptionFilter)
-  async create(@Body() createCatDto: CreateCatDto) {
+  async create(@Body(new ValidationPipe()) createCatDto: CreateCatDto) {
+    console.log(createCatDto);
     return this.catsService.create(createCatDto);
   }
 }

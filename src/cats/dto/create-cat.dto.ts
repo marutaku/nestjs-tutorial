@@ -1,3 +1,4 @@
+import { IsString, IsInt } from 'class-validator';
 /**
  * We could determine the DTO schema by using TypeScript interfaces, or by simple classes.
  * Interestingly, we recommend using classes here.
@@ -6,7 +7,12 @@
  * This is important because features such as Pipes enable additional possibilities when they have access to the metatype of the variable at runtime.
  */
 export class CreateCatDto {
+  @IsString()
   name: string;
+
+  @IsInt()
   age: number;
+
+  @IsString()
   breed: string;
 }
